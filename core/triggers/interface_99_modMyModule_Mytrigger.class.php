@@ -17,12 +17,12 @@
  */
 
 /**
- * 	\file		core/triggers/interface_99_modMyodule_Mytrigger.class.php
+ * 	\file		core/triggers/interface_99_modMyModule_Mytrigger.class.php
  * 	\ingroup	mymodule
  * 	\brief		Sample trigger
  * 	\remarks	You can create other triggers by copying this one
  * 				- File name should be either:
- * 					interface_99_modMymodule_Mytrigger.class.php
+ * 					interface_99_modMyModule_Mytrigger.class.php
  * 					interface_99_all_Mytrigger.class.php
  * 				- The file must stay in core/triggers
  * 				- The class name must be InterfaceMytrigger

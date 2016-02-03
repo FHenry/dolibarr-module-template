@@ -23,11 +23,12 @@
  * 				Put some comments here
  */
 // Dolibarr environment
-$res = @include("../../main.inc.php"); // From htdocs directory
+$res = @include "../../main.inc.php"; // From htdocs directory
 if (! $res) {
-    $res = @include("../../../main.inc.php"); // From "custom" directory
+    $res = @include "../../../main.inc.php"; // From "custom" directory
 }
 
+global $langs, $user;
 
 // Libraries
 require_once DOL_DOCUMENT_ROOT . "/core/lib/admin.lib.php";
@@ -75,4 +76,3 @@ echo $langs->trans("MyModuleSetupPage");
 // Page end
 dol_fiche_end();
 llxFooter();
-$db->close();

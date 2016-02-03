@@ -6,7 +6,7 @@ It's a tool for module developpers to kickstart their project.
 
 If you're not a module developper you have no use for this.
 
-Licence
+License
 -------
 
 GPLv3 or (at your option) any later version.
@@ -82,7 +82,7 @@ Contributions
 
 Feel free to contribute and report defects at <http://github.com/rdoursenaud/dolibarr-module-template>
 
-Other Licences
+Other Licenses
 --------------
 
 Uses [Michel Fortin's PHP Markdown](http://michelf.ca/projets/php-markdown/) Licensed under BSD to display this README in the module's about page.

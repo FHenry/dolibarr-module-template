@@ -27,43 +27,48 @@
 //if (! defined('NOREQUIREDB'))		define('NOREQUIREDB','1');
 //if (! defined('NOREQUIRESOC'))	define('NOREQUIRESOC','1');
 //if (! defined('NOREQUIRETRAN'))	define('NOREQUIRETRAN','1');
+// Do not check anti CSRF attack test
 //if (! defined('NOCSRFCHECK'))		define('NOCSRFCHECK','1');
+// Do not check style html tag into posted data
+//if (! defined('NOSTYLECHECK'))   define('NOSTYLECHECK','1');
+// Do not check anti POST attack test
 //if (! defined('NOTOKENRENEWAL'))	define('NOTOKENRENEWAL','1');
-// If there is no menu to show
+// If there is no need to load and show top and left menu
 //if (! defined('NOREQUIREMENU'))	define('NOREQUIREMENU','1');
 // If we don't need to load the html.form.class.php
 //if (! defined('NOREQUIREHTML'))	define('NOREQUIREHTML','1');
 //if (! defined('NOREQUIREAJAX'))	define('NOREQUIREAJAX','1');
 // If this page is public (can be called outside logged session)
 //if (! defined("NOLOGIN"))			define("NOLOGIN",'1');
-// Choose the following lines to use the correct relative path
+// Change the following lines to use the correct relative path
 // (../, ../../, etc)
 $res = 0;
 if (! $res && file_exists("../main.inc.php")) {
-    $res = @include("../main.inc.php");
+    $res = @include "../main.inc.php";
 }
 if (! $res && file_exists("../../main.inc.php")) {
-    $res = @include("../../main.inc.php");
+    $res = @include "../../main.inc.php";
 }
 if (! $res && file_exists("../../../main.inc.php")) {
-    $res = @include("../../../main.inc.php");
+    $res = @include "../../../main.inc.php";
 }
 // The following should only be used in development environments
 if (! $res && file_exists("../../../dolibarr/htdocs/main.inc.php")) {
-    $res = @include("../../../dolibarr/htdocs/main.inc.php");
+    $res = @include "../../../dolibarr/htdocs/main.inc.php";
 }
 if (! $res && file_exists("../../../../dolibarr/htdocs/main.inc.php")) {
-    $res = @include("../../../../dolibarr/htdocs/main.inc.php");
+    $res = @include "../../../../dolibarr/htdocs/main.inc.php";
 }
 if (! $res && file_exists("../../../../../dolibarr/htdocs/main.inc.php")) {
-    $res = @include("../../../../../dolibarr/htdocs/main.inc.php");
+    $res = @include"../../../../../dolibarr/htdocs/main.inc.php";
 }
 if (! $res) {
     die("Main include failed");
 }
-// Change this following line to use the correct relative path from htdocs
-// (do not remove DOL_DOCUMENT_ROOT)
-require_once DOL_DOCUMENT_ROOT . "custom/mymodule/class/myclass.class.php";
+
+global $db, $langs, $user;
+
+dol_include_once('/mymodule/class/myclass.class.php');
 
 // Load translation files required by the page
 $langs->load("mymodule@mymodule");
@@ -79,6 +84,20 @@ if ($user->societe_id > 0) {
     accessforbidden();
 }
 
+// Default action
+if (empty($action) && empty($id) && empty($ref)) {
+    $action='create';
+}
+
+// Load object if id or ref is provided as parameter
+$object = new MyClass($db);
+if (($id > 0 || ! empty($ref)) && $action != 'add') {
+    $result = $object->fetch($id, $ref);
+    if ($result < 0) {
+        dol_print_error($db);
+    }
+}
+
 /*
  * ACTIONS
  *
@@ -86,7 +105,7 @@ if ($user->societe_id > 0) {
  */
 
 if ($action == 'add') {
-    $myobject = new SkeletonClass($db);
+    $myobject = new MyClass($db);
     $myobject->prop1 = $_POST["field1"];
     $myobject->prop2 = $_POST["field2"];
     $result = $myobject->create($user);
@@ -109,24 +128,24 @@ llxHeader('', 'MyPageName', '');
 $form = new Form($db);
 
 // Put here content of your page
-// Example 1 : Adding jquery code
+// Example 1: Adding jquery code
 echo '<script type="text/javascript" language="javascript">
-jQuery(document).ready(function() {
-    public function init_myfunc()
-    {
-        jQuery("#myid").removeAttr(\'disabled\');
-        jQuery("#myid").attr(\'disabled\',\'disabled\');
-    }
-    init_myfunc();
-    jQuery("#mybutton").click(function() {
-        init_needroot();
+    jQuery(document).ready(function() {
+        public function init_myfunc()
+        {
+            jQuery("#myid").removeAttr(\'disabled\');
+            jQuery("#myid").attr(\'disabled\',\'disabled\');
+        }
+        init_myfunc();
+        jQuery("#mybutton").click(function() {
+            init_needroot();
+        });
     });
-});
 </script>';
 
-// Example 2 : Adding jquery code
+// Example 2: Adding links to objects
+// The class must extend CommonObject for this method to be available
 $somethingshown = $myobject->showLinkedObjectBlock();
 
 // End of page
 llxFooter();
-$db->close();

@@ -23,18 +23,19 @@
  * 				Put some comments here
  */
 // Dolibarr environment
-$res = @include("../../main.inc.php"); // From htdocs directory
+$res = @include "../../main.inc.php"; // From htdocs directory
 if (! $res) {
-    $res = @include("../../../main.inc.php"); // From "custom" directory
+    $res = @include "../../../main.inc.php"; // From "custom" directory
 }
 
+global $langs, $user;
 
 // Libraries
 require_once DOL_DOCUMENT_ROOT . "/core/lib/admin.lib.php";
 require_once '../lib/mymodule.lib.php';
 
 // Use the .inc variant because we don't have autoloading support
-dol_include_once('/mymodule/lib/php-markdown/Michelf/Markdown.inc.php');
+require_once '../lib/php-markdown/Michelf/Markdown.inc.php';
 
 use \Michelf\Markdown;
 
@@ -92,4 +93,3 @@ echo '<br>',
 // Page end
 dol_fiche_end();
 llxFooter();
-$db->close();

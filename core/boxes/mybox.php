@@ -26,6 +26,9 @@ include_once DOL_DOCUMENT_ROOT . "/core/boxes/modules_boxes.php";
 
 /**
  * Class to manage the box
+ *
+ * Warning: for the box to be detected correctly by dolibarr,
+ * the filename should be the lowercase classname
  */
 class mybox extends ModeleBoxes
 {

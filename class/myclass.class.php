@@ -30,7 +30,7 @@
 /**
  * Put your class' description here
  */
-class SkeletonClass // extends CommonObject
+class MyClass // extends CommonObject
 {
 
     private $db; //!< To store db handler

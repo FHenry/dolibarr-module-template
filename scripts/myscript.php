@@ -76,7 +76,8 @@ if (! $result > 0) {
 $user->getrights();
 
 // Display banner and help
-echo "***** " . $script_file . " (" . $version . ") *****\n";
+echo "***** " . $script_file . " (" . $version . ") pid=" . getmypid() . " *****\n";
+dol_syslog($script_file . " launched with arg " . join(',', $argv));
 if (! isset($argv[1])) {
     // Check parameters
     echo "Usage: " . $script_file . " param1 param2 ...\n";
@@ -91,7 +92,7 @@ $db->begin();
 
 // Examples for manipulating a class
 require_once '../class/myclass.class.php';
-$myobject = new SkeletonClass($db);
+$myobject = new MyClass($db);
 
 // Example for inserting creating object in database
 /*
